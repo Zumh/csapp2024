@@ -6,7 +6,6 @@
 - https://github.com/Zumh/CSAPP-3e-Solutions
 - https://dreamanddead.github.io/CSAPP-3e-Solutions/
 ## Whole Summary
-I can summarize the contents of the document csapp3.pdf for you. 
 
 **Computer Systems: A Programmer's Perspective**
 
