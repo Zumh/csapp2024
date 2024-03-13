@@ -35,14 +35,14 @@ The book is organized into four parts:
 
 
 ## Chapters summaries
-### Chapter 1:
-- A Tour of Computer Systems - This chapter provides a high-level overview of computer systems, including their components, information storage, programs, and processes. It also introduces concepts like memory hierarchy, storage devices, and the operating system.
-### Chapter 2: 
-- Representing and Manipulating Information - This chapter dives deeper into how information is represented and stored in computer systems using various encoding schemes. It covers topics like hexadecimal notation, data sizes, integers, floating-point numbers, and bitwise operations.
-### Chapter 3: 
-- Machine-Level Representation of Programs - This chapter explores how programs are represented at the machine level, including instruction sets, data formats, and memory access. It explains how processors read and execute instructions, covering topics like control flow, procedures, and arrays.
-### Chapter 4: 
-- Processor Architecture - This chapter delves into the internal workings of processors, including their instruction set architecture (ISA) and pipelining for improved performance. It introduces concepts like logic gates, combinational circuits, and the Y86-64 instruction set.
+### Chapter 1: A Tour of Computer Systems 
+- This chapter provides a high-level overview of computer systems, including their components, information storage, programs, and processes. It also introduces concepts like memory hierarchy, storage devices, and the operating system.
+### Chapter 2: Representing and Manipulating Information 
+- This chapter dives deeper into how information is represented and stored in computer systems using various encoding schemes. It covers topics like hexadecimal notation, data sizes, integers, floating-point numbers, and bitwise operations.
+### Chapter 3: Machine-Level Representation of Programs 
+- This chapter explores how programs are represented at the machine level, including instruction sets, data formats, and memory access. It explains how processors read and execute instructions, covering topics like control flow, procedures, and arrays.
+### Chapter 4: Processor Architecture 
+- This chapter delves into the internal workings of processors, including their instruction set architecture (ISA) and pipelining for improved performance. It introduces concepts like logic gates, combinational circuits, and the Y86-64 instruction set.
 
 ### Chapter 5: Optimizing Program Performance
 
