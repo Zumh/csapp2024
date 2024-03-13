@@ -35,14 +35,17 @@ The book is organized into four parts:
 - The fourth part of the book covers input/output and file systems, which are the parts of the operating system that allow programs to interact with devices such as keyboards, disks, and printers.
 
 
-## Book Summaries
+## Chapters summaries
+### Chapter 1:
+- A Tour of Computer Systems - This chapter provides a high-level overview of computer systems, including their components, information storage, programs, and processes. It also introduces concepts like memory hierarchy, storage devices, and the operating system.
+### Chapter 2: 
+- Representing and Manipulating Information - This chapter dives deeper into how information is represented and stored in computer systems using various encoding schemes. It covers topics like hexadecimal notation, data sizes, integers, floating-point numbers, and bitwise operations.
+### Chapter 3: 
+- Machine-Level Representation of Programs - This chapter explores how programs are represented at the machine level, including instruction sets, data formats, and memory access. It explains how processors read and execute instructions, covering topics like control flow, procedures, and arrays.
+### Chapter 4: 
+- Processor Architecture - This chapter delves into the internal workings of processors, including their instruction set architecture (ISA) and pipelining for improved performance. It introduces concepts like logic gates, combinational circuits, and the Y86-64 instruction set.
 
-* Chapter 1: A Tour of Computer Systems - This chapter provides a high-level overview of computer systems, including their components, information storage, programs, and processes. It also introduces concepts like memory hierarchy, storage devices, and the operating system.
-* Chapter 2: Representing and Manipulating Information - This chapter dives deeper into how information is represented and stored in computer systems using various encoding schemes. It covers topics like hexadecimal notation, data sizes, integers, floating-point numbers, and bitwise operations.
-* Chapter 3: Machine-Level Representation of Programs - This chapter explores how programs are represented at the machine level, including instruction sets, data formats, and memory access. It explains how processors read and execute instructions, covering topics like control flow, procedures, and arrays.
-* Chapter 4: Processor Architecture - This chapter delves into the internal workings of processors, including their instruction set architecture (ISA) and pipelining for improved performance. It introduces concepts like logic gates, combinational circuits, and the Y86-64 instruction set.
-
-**Chapter 5: Optimizing Program Performance**
+### Chapter 5: Optimizing Program Performance
 
 * This chapter explores techniques to improve program performance by identifying bottlenecks and applying compiler optimizations. It covers topics like:
     * Eliminating loop inefficiencies.
@@ -51,28 +54,28 @@ The book is organized into four parts:
     * Memory hierarchy and cache optimizations.
     * Performance analysis and profiling techniques.
 
-**Chapter 6: The Memory Hierarchy**
+### Chapter 6: The Memory Hierarchy
 
 * This chapter dives into the concept of memory hierarchy, which involves different levels of storage with varying access speeds and capacities. It explains how caches, RAM, and secondary storage (like disks) work together to improve overall system performance. The chapter covers:
     * Locality of reference principle in program execution.
     * Cache organization and performance metrics.
     * Techniques for writing cache-friendly code.
 
-**Chapter 7: Linking**
+### Chapter 7: Linking
 
 * This chapter explains the process of linking, which combines multiple object files created by the compiler into an executable file. It covers topics like:
     * Relocatable object files and symbol resolution.
     * Static linking versus dynamic linking with shared libraries.
     * Position-Independent Code (PIC) for shared libraries.
 
-**Chapter 8: Exceptional Control Flow**
+### Chapter 8: Exceptional Control Flow
 
 * This chapter explores how computer systems handle exceptional events that disrupt the normal flow of program execution. It covers:
     * Exception handling mechanisms and different classes of exceptions.
     * Process control concepts like creating, terminating, waiting for, and signaling processes.
     * Signal handling and synchronization techniques to avoid race conditions.
  
-**Chapter 9 Virtual Memory**
+### Chapter 9 Virtual Memory
 
 **Why Virtual Memory?**
 
@@ -98,7 +101,7 @@ The book is organized into four parts:
 
 The chapter also explores concepts like the working-set model, kernel memory management, and considerations for specific operating systems.
 
-**Chapter 10 System Level I/O**
+### Chapter 10 System Level I/O
 
 **System Calls for File I/O**
 
@@ -134,7 +137,7 @@ The chapter also explores concepts like the working-set model, kernel memory man
 * Standard I/O and network files have limitations that can cause incompatibility.
 * For network applications, Unix I/O is recommended over standard I/O due to its better compatibility.
 
-**Chapter 11 Network Programming**
+### Chapter 11 Network Programming
 **Client-Server Model**
 
 * Every network application relies on the client-server model.
@@ -166,7 +169,7 @@ The chapter also explores concepts like the working-set model, kernel memory man
 
 * With a few hundred lines of code, a basic web server can handle both static and dynamic content using CGI.
 
-**Chapter 12 Concurrent Programming**
+### Chapter 12 Concurrent Programming
 
 **Building Concurrent Programs**
 
