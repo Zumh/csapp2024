@@ -1,6 +1,8 @@
 # csapp2024
 - https://csapp.cs.cmu.edu/
 - https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22
+- Lectures and Slides
+- https://www.cs.cmu.edu/afs/cs/academic/class/15213-f23/www/schedule.html
 
 ## solutions
 - https://github.com/Zumh/CSAPP-3e-Solutions
