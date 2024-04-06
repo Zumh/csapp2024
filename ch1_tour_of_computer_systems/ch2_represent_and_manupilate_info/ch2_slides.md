@@ -36,7 +36,8 @@ In this example, the XOR operation will return a 1 because the values of a and b
 Here is a truth table for the XOR operation:
 
 ```
-A | B | A XOR B
+A XOR B
+A | B | XOR
 0 | 0 | 0
 0 | 1 | 1
 1 | 0 | 1
