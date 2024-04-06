@@ -1,5 +1,5 @@
 ## Summary of Representing and Manipulating Information
-![image](https://github.com/Zumh/csapp2024/assets/17211423/0cfffe4b-5ca8-4d66-85be-b4980ef9143e)
+
 
 **Integer Representations**
 * Binary, decimal, and hexadecimal representation systems
