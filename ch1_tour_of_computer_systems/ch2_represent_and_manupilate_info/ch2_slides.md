@@ -12,7 +12,7 @@
 ## Hexadecimal
 - Hex or 16 base to decimal
 ![image](https://github.com/Zumh/csapp2024/assets/17211423/59d6ffde-c02c-40e9-9182-116374edb36a)
-**The XOR (exclusive OR) operation is a logical operation that returns a 1 if the two input bits are different, and a 0 if they are the same**. This operation is often used in computer programming to compare two values and determine if they are equal or not.
+- **The XOR (exclusive OR) operation is a logical operation that returns a 1 if the two input bits are different, and a 0 if they are the same**. This operation is often used in computer programming to compare two values and determine if they are equal or not.
 
 For example, the following C code uses the XOR operation to compare the values of two variables, a and b:
 
