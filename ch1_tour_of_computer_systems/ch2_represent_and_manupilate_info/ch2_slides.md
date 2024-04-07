@@ -45,3 +45,20 @@ A | B | XOR
 ```
 
 As you can see from the truth table, the XOR operation returns a 1 only when the two input bits are different. Otherwise, it returns a 0.
+
+## Negative numbers
+- How to convert negative number to binary?
+- To represent -2 in binary using a signed integer representation, you typically use what's called "two's complement" notation. In this notation, the leftmost bit represents the sign (0 for positive, 1 for negative), and the remaining bits represent the magnitude of the number.
+  
+  For example, let's say we're representing numbers with 4 bits. Here's how we would represent -2 in binary using two's complement:
+  
+  1. Convert 2 to binary:
+     2 in binary is 0010.
+  
+  2. Invert the bits:
+     0010 -> 1101
+  
+  3. Add 1 to the inverted bits:
+     1101 + 1 = 1110
+  
+  So, -2 in binary using a signed 4-bit representation is 1110.
