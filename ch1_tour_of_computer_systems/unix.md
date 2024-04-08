@@ -5,7 +5,7 @@ Figure 1.2. Server handling multiple clients at the same time.
 The client application and the server application may be thought of as communicating via a network protocol, but actually, multiple layers of network protocols are typically involved. In this text, we focus on the TCP/IP protocol suite, also called the Internet protocol suite. For example, Web clients and servers communicate using the Transmission Control Protocol, or TCP. TCP, in turn, uses the Internet Protocol, or IP, and IP communicates with a datalink layer of some form. If the client and server are on the same Ethernet, we would have the arrangement shown in Figure 1.3.
 Figure 1.3. Client and server on the same Ethernet communicating using TCP.
 Page 29
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 Even though the client and server communicate using an application protocol, the transport layers communicate using TCP. Note that the actual flow of information between the client and server goes down the protocol stack on one side, across the network, and up the protocol stack on the other side. Also note that the client and server are typically user processes, while the TCP and IP protocols are normally part of the protocol stack within the kernel. We have labeled the four layers on the right side of Figure 1.3.
 TCP and IP are not the only protocols that we will discuss. Some clients and servers use the User Datagram Protocol (UDP) instead of TCP, and we will discuss both protocols in more detail in Chapter 2. Furthermore, we have used the term "IP," but the protocol, which has been in use since the early 1980s, is officially called IP version 4 (IPv4). A new version, IP version 6 (IPv6) was developed during the mid-1990s and could potentially replace IPv4 in the years to come. This text covers the development of network applications using both IPv4 and IPv6. Appendix A provides a comparison of IPv4 and IPv6, along with other protocols that we will discuss.
 The client and server need not be attached to the same local area network (LAN) as we show in Figure 1.3. For instance, in Figure 1.4, we show the client and server on different LANs, with both LANs connected to a wide area network (WAN) using routers.
@@ -13,13 +13,13 @@ Figure 1.4. Client and server on different LANs connected through a WAN.
 Routers are the building blocks of WANs. The largest WAN today is the Internet. Many companies build their own WANs and these private WANs may or may not be connected to the Internet.
 The remainder of this chapter provides an introduction to the various topics that are covered in detail later in the text. We start with a complete example of a TCP client, albeit a simple one, that demonstrates many of the function calls and concepts that we will encounter throughout the text. This client works with IPv4 only, and we show the changes
 Page 30
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 required to work with IPv6. A better solution is to write protocol-independent clients and servers, and we will discuss this in Chapter 11. This chapter also shows a complete TCP server that works with our client.
 To simplify all our code, we define our own wrapper functions for most of the system functions that we call throughout the text. We can use these wrapper functions most of the time to check for an error, print an appropriate message, and terminate when an error occurs. We also show the test network, hosts, and routers used for most examples in the text, along with their hostnames, IP addresses, and operating systems.
 Most discussions of Unix these days include the term "X," which is the standard that most vendors have adopted. We describe the history of POSIX and how it affects the Application Programming Interfaces (APIs) that we describe in this text, along with the other players in the standards arena.
 [ Team LiB ]
 Page 31
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.2 A Simple Daytime Client Let's consider a specific example to introduce many of the concepts and terms that we will encounter throughout the book. Figure 1.5 is an implementation of a TCP time-of-day client. This client establishes a TCP connection with a server and the server simply sends back the current time and date in a human-readable format.
 Figure 1.5 TCP daytime client.
@@ -54,7 +54,7 @@ intro/daytimetcpcli.c
 This is the format that we will use for all the source code in the text. Each nonblank line is numbered. The text describing portions of the code notes the starting and ending line numbers in the left margin, as shown shortly. Sometimes a paragraph is preceded by a short, descriptive, bold heading, providing a summary statement of the code being described.
 The horizontal rules at the beginning and end of a code fragment specify the source code filename: the file daytimetcpcli.c in the directory intro for this example. Since the source code for all the examples in the text is freely available (see the Preface), this lets you locate the appropriate source file. Compiling, running, and especially modifying these programs while reading this text is an excellent way to learn the concepts of network
 Page 32
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 programming.
 Throughout the text, we will use indented, parenthetical notes such as this to describe implementation details and historical points.
 If we compile the program into the default a.out file and execute it, we will have the following output:
@@ -70,7 +70,7 @@ sockfd = socket(AF_INET, SOCK_STREAM, 0);
 if (sockfd < 0)
 it is a common C idiom to combine the two lines. The set of parentheses around the function call and assignment is required, given the precedence rules of C (the less-than operator has a higher precedence than assignment). As a matter of coding style, the authors always place a space between the two opening parentheses, as a visual indicator that the left-hand side of the comparison is also an assignment. (This style is copied from the Minix source code [Tanenbaum 1987].) We use this same style in the while statement later in the program.
 Page 33
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 We will encounter many different uses of the term "socket." First, the API that we are using is called the sockets API. In the preceding paragraph, we referred to a function named socket that is part of the sockets API. In the preceding paragraph, we also referred to a TCP socket, which is synonymous with a TCP endpoint.
 If the call to socket fails, we abort the program by calling our own err_sys function. It prints our error message along with a description of the system error that occurred (e.g., "Protocol not supported" is one possible error from socket) and terminates the process. This function, and a few others of our own that begin with err_, are called throughout the text. We will describe them in Section D.3.
 Specify server's IP address and port 12 16 We fill in an Internet socket address structure (a sockaddr_in structure named servaddr) with the server's IP address and port number. We set the entire structure to 0 using bzero, set the address family to AF_INET, set the port number to 13 (which is the well-known port of the daytime server on any TCP/IP host that supports this service, as shown in Figure 2.18), and set the IP address to the value specified as the first command-line argument (argv[1]). The IP address and port number fields in this structure must be in specific formats: We call the library function htons ("host to network short") to convert the binary port number, and we call the library function inet_pton ("presentation to numeric") to convert the ASCII command-line argument (such as 206.62.226.35 when we ran this example) into the proper format.
@@ -80,7 +80,7 @@ This may be your first encounter with the inet_pton function. It is new with IPv
 Establish connection with server 17 18 The connect function, when applied to a TCP socket, establishes a TCP connection with the server specified by the socket address structure pointed to by the second argument. We must also specify the length of the socket address structure as the third argument to connect, and for Internet socket address structures, we always let the compiler calculate the length using C's sizeof operator.
 In the unp.h header, we #define SA to be struct sockaddr, that is, a generic socket address structure. Everytime one of the socket functions requires a pointer to a socket
 Page 34
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 address structure, that pointer must be cast to a pointer to a generic socket address structure. This is because the socket functions predate the ANSI C standard, so the void * pointer type was not available in the early 1980s when these functions were developed. The problem is that "struct sockaddr" is 15 characters and often causes the source code line to extend past the right edge of the screen (or page, in the case of a book), so we shorten it to SA. We will talk more about generic socket address structures when explaining Figure 3.3.
 Read and display server's reply 19 25 We read the server's reply and display the result using the standard I/O fputs function. We must be careful when using TCP because it is a byte-stream protocol with no record boundaries. The server's reply is normally a 26-byte string of the form
 Mon May 26 20 : 58 : 40 2003\r\n
@@ -90,7 +90,7 @@ Terminate program 26 exit terminates the program. Unix always closes all open de
 As we mentioned, the text will go into much more detail on all the points we just described.
 [ Team LiB ]
 Page 35
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.3 Protocol Independence Our program in Figure 1.5 is protocol-dependent on IPv4. We allocate and initialize a sockaddr_in structure, we set the family of this structure to AF_INET, and we specify the first argument to socket as AF_INET.
 To modify the program to work under IPv6, we must change the code. Figure 1.6 shows a version that works under IPv6, with the changes highlighted in bold.
@@ -126,11 +126,11 @@ intro/daytimetcpcliv6.c
 Only five lines are changed, but what we now have is another protocol-dependent program; this time, it is dependent on IPv6. It is better to make a program protocol-independent. Figure 11.11 will show a version of this client that is protocol-independent by using the getaddrinfo function (which is called by tcp_connect).
 Another deficiency in our programs is that the user must enter the server's IP address as a dotted-decimal number (e.g., 206.168.112.219 for the IPv4 version). Humans work better with names instead of numbers (e.g., www.unpbook.com). In Chapter 11, we will discuss the functions that convert between hostnames and IP addresses, and between service
 Page 36
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 names and ports. We purposely put off the discussion of these functions and continue using IP addresses and port numbers so we know exactly what goes into the socket address structures that we must fill in and examine. This also avoids complicating our discussion of network programming with the details of yet another set of functions.
 [ Team LiB ]
 Page 37
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.4 Error Handling: Wrapper Functions In any real-world program, it is essential to check every function call for an error return. In Figure 1.5, we check for errors from socket, inet_pton, connect, read, and fputs, and when one occurs, we call our own functions, err_quit and err_sys, to print an error message and terminate the program. We find that most of the time, this is what we want to do. Occasionally, we want to do something other than terminate when one of these functions returns an error, as in Figure 5.12, when we must check for an interrupted system call.
 Since terminating on an error is the common case, we can shorten our programs by defining a wrapper function that performs the actual function call, tests the return value, and terminates on an error. The convention we use is to capitalize the name of the function, as in
@@ -152,7 +152,7 @@ While these wrapper functions might not seem like a big savings, when we discuss
 int n;
 if ( (n = pthread_mutex_lock(&ndone_mutex)) != 0)
 Page 38
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 errno = n, err_sys("pthread_mutex_lock error");
 Alternately, we could define a new error function that takes the system's error number as an argument. But, we can make this piece of code much easier to read as just
 Pthread_mutex_lock(&ndone_mutex);
@@ -176,11 +176,11 @@ Unix errno Value When an error occurs in a Unix function (such as one of the soc
 The value of errno is set by a function only if an error occurs. Its value is undefined if the function does not return an error. All of the positive error values are constants with all-uppercase names beginning with "E," and are normally defined in the header. No error has a value of 0.
 Storing errno in a global variable does not work with multiple threads that share all global variables. We will talk about solutions to this problem in Chapter 26.
 Page 39
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 Throughout the text, we will use phrases such as "the connect function returns ECONNREFUSED" as shorthand to mean that the function returns an error (typically with a return value of 1), with errno set to the specified constant.
 [ Team LiB ]
 Page 40
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.5 A Simple Daytime Server We can write a simple version of a TCP daytime server, which will work with the client from Section 1.2. We use the wrapper functions that we described in the previous section and show this server in Figure 1.9.
 Figure 1.9 TCP daytime server.
@@ -213,7 +213,7 @@ Create a TCP socket 10 The creation of the TCP socket is identical to the client
 Bind server's well-known port to socket 11 15 The server's well-known port (13 for the daytime service) is bound to the socket by filling in an Internet socket address structure and calling bind. We specify the IP address as INADDR_ANY, which allows the server to accept a client connection on any interface, in case the server host has multiple interfaces. Later we will see how we can restrict the server to accepting a client connection on just a single interface.
 Convert socket to listening socket
 Page 41
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 16 By calling listen, the socket is converted into a listening socket, on which incoming connections from clients will be accepted by the kernel. These three steps, socket, bind, and listen, are the normal steps for any TCP server to prepare what we call the listening descriptor (listenfd in this example).
 The constant LISTENQ is from our unp.h header. It specifies the maximum number of client connections that the kernel will queue for this listening descriptor. We say much more about this queueing in Section 4.5.
 Accept client connection, send reply 17 21 Normally, the server process is put to sleep in the call to accept, waiting for a client connection to arrive and be accepted. A TCP connection uses what is called a three-way handshake to establish a connection. When this handshake completes, accept returns, and the return value from the function is a new descriptor (connfd) that is called the connected descriptor. This new descriptor is used for communication with the new client. A new descriptor is returned by accept for each client that connects to our server.
@@ -229,7 +229,7 @@ snprintf was a relatively late addition to the ANSI C standard, introduced in th
 It is remarkable how many network break-ins have occurred by a hacker sending data to cause a server's call to sprintf to overflow its buffer. Other functions that we should be careful with are gets, strcat, and strcpy, normally calling fgets, strncat, and strncpy instead. Even better are the more recently available functions strlcat and strlcpy, which ensure the result is a properly terminated string. Additional tips on writing secure network programs are found in Chapter 23 of [Garfinkel, Schwartz, and Spafford 2003].
 Terminate connection
 Page 42
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 22 The server closes its connection with the client by calling close. This initiates the normal TCP connection termination sequence: a FIN is sent in each direction and each FIN is acknowledged by the other end. We will say much more about TCP's three-way handshake and the four TCP packets used to terminate a TCP connection in Section 2.6.
 As with the client in the previous section, we have only examined this server briefly, saving all the details for later in the book. Note the following points:
  As with the client, the server is protocol-dependent on IPv4. We will show a protocol-independent version that uses the getaddrinfo function in Figure 11.13.
@@ -238,7 +238,7 @@ As with the client in the previous section, we have only examined this server br
  If we start a server like this from a shell command line, we might want the server to run for a long time, since servers often run for as long as the system is up. This requires that we add code to the server to run correctly as a Unix daemon: a process that can run in the background, unattached to a terminal. We will cover this in Section 13.4.
 [ Team LiB ]
 Page 43
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.6 Roadmap to Client/Server Examples in the Text Two client/server examples are used predominantly throughout the text to illustrate the various techniques used in network programming:
  A daytime client/server (which we started in Figures 1.5, 1.6, and 1.9)
@@ -248,11 +248,11 @@ Figure 1.10. Different versions of the daytime client developed in the text.
 Figure 1.11. Different versions of the daytime server developed in the text.
 Figure 1.12. Different versions of the echo client developed in the text.
 Page 44
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 Figure 1.13. Different versions of the echo server developed in the text.
 [ Team LiB ]
 Page 45
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.7 OSI Model A common way to describe the layers in a network is to use the International Organization for Standardization (ISO) open systems interconnection (OSI) model for computer communications. This is a seven-layer model, which we show in Figure 1.14, along with the approximate mapping to the Internet protocol suite.
 Figure 1.14. Layers in OSI model and Internet protocol suite.
@@ -262,21 +262,21 @@ The upper three layers of the OSI model are combined into a single layer called 
 The sockets programming interfaces described in this book are interfaces from the upper three layers (the "application") into the transport layer. This is the focus of this book: how to write applications using sockets that use either TCP or UDP. We already mentioned raw sockets, and in Chapter 29 we will see that we can even bypass the IP layer completely to read and write our own datalink-layer frames.
 Why do sockets provide the interface from the upper three layers of the OSI model into the transport layer? There are two reasons for this design, which we note on the right side of Figure 1.14. First, the upper three layers handle all the details of the application (FTP, Telnet, or HTTP, for example) and know little about the communication details. The lower four layers know little about the application, but handle all the communication details: sending data, waiting for acknowledgments, sequencing data that arrives out of order, calculating and verifying checksums, and so on. The second reason is that the upper three layers often form what is called a user process while the lower four layers are normally provided as part of the operating system (OS) kernel. Unix provides this separation between the user process and the kernel, as do many other contemporary operating systems. Therefore, the interface between layers 4 and 5 is the natural place to build the API.
 Page 46
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 Page 47
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.8 BSD Networking History The sockets API originated with the 4.2BSD system, released in 1983. Figure 1.15 shows the development of the various BSD releases, noting the major TCP/IP developments. A few changes to the sockets API also took place in 1990 with the 4.3BSD Reno release, when the OSI protocols went into the BSD kernel.
 Figure 1.15. History of various BSD releases.
 The path down the figure from 4.2BSD through 4.4BSD shows the releases from the Computer Systems Research Group (CSRG) at Berkeley, which required the recipient to already have a source code license for Unix. But all the networking code, both the kernel support (such as the TCP/IP and Unix domain protocol stacks and the socket interface), along with the applications (such as the Telnet and FTP clients and servers), were developed independently from the AT&T-derived Unix code. Therefore, starting in 1989, Berkeley provided the first of the BSD networking releases, which contained all the networking code and various other pieces of the BSD system that were not constrained by the Unix source code license requirement. These releases were "publicly available" and eventually became available by anonymous FTP to anyone.
 The final releases from Berkeley were 4.4BSD-Lite in 1994 and 4.4BSD-Lite2 in 1995. We note that these two releases were then used as the base for other systems: BSD/OS, FreeBSD, NetBSD, and OpenBSD, most of which are still being actively developed and enhanced. More information on the various BSD releases, and on the history of the various Unix systems in general, can be found in Chapter 01 of [McKusick et al. 1996].
 Page 48
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 Many Unix systems started with some version of the BSD networking code, including the sockets API, and we refer to these implementations as Berkeley-derived implementations. Many commercial versions of Unix are based on System V Release 4 (SVR4). Some of these versions have Berkeley-derived networking code (e.g., UnixWare 2.x), while the networking code in other SVR4 systems has been independently derived (e.g., Solaris 2.x). We also note that Linux, a popular, freely available implementation of Unix, does not fit into the Berkeley-derived classification: Its networking code and sockets API were developed from scratch.
 [ Team LiB ]
 Page 49
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.9 Test Networks and Hosts Figure 1.16 shows the various networks and hosts used in the examples throughout the text. For each host, we show the OS and the type of hardware (since some of the operating systems run on more than one type of hardware). The name within each box is the hostname that appears in the text.
 The topology shown in Figure 1.16 is interesting for the sake of our examples, but the machines are largely spread out across the Internet and the physical topology becomes less interesting in practice. Instead, virtual private networks (VPNs) or secure shell (SSH) connections provide connectivity between these machines regardless of where they live physically.
@@ -287,7 +287,7 @@ Discovering Network Topology We show the network topology in Figure 1.16 for the
 1. netstat -i provides information on the interfaces. We also specify the -n flag to print numeric addresses, instead of trying to find names for the networks. This shows us the interfaces and their names.
 2. 3.
 Page 50
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 4. 5. linux % netstat -ni
 6. Kernel Interface table
 7. Iface MTU Met RX-OK RX-ERR RX-DRP RX-OVR TX-OK TX-ERR TX-DRP TX-OVR
@@ -342,7 +342,7 @@ fe80:8::a00:20ff:fea7:686b
 -
 11. netstat -r shows the routing table, which is another way to determine the
 Page 51
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 interfaces. We normally specify the -n flag to print numeric addresses. This also shows the IP address of the default router.
 12. 13. 14. 15. freebad % netstat -nr 16. Routing tables 17. 18. Internet: 19. Destination Gateway Flags Refs Use Netif
 Expire
@@ -371,7 +371,7 @@ Netif Expire
 47. fe80::%hme1/64 link#2 UC hme1
 48. fe80::a00:20ff:fea7:686b%hme1 08:00:20:a7:68:6b UHL
 Page 52
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 lo0
 49. fe80::%lo0/64 fe80::1%lo0 Uc lo0
 50. fe80::1%lo0 link#6 UHL lo0
@@ -396,11 +396,11 @@ This shows the IP address, subnet mask, and broadcast address. The MULTICAST fla
 of data.
 81. 64 bytes from 206.168.112.96: icmp_seq=0 ttl=255 time=241 usec 82. 64 bytes from 206.168.112.40: icmp_seq=0 ttl=255 time=2.566 msec (DUP!) 83. 64 bytes from 206.168.112.118: icmp_seq=0 ttl=255 time=2.973 msec (DUP!) 84. 64 bytes from 206.168.112.14: icmp_seq=0 ttl=255 time=3.089 msec (DUP!) 85. 64 bytes from 206.168.112.126: icmp_seq=0 ttl=255 time=3.200 msec (DUP!) 86. 64 bytes from 206.168.112.71: icmp_seq=0 ttl=255 time=3.311 msec (DUP!) 87. 64 bytes from 206.168.112.31: icmp_seq=0 ttl=64 time=3.541 msec (DUP!)
 Page 53
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 88. 64 bytes from 206.168.112.7: icmp_seq=0 ttl=255 time=3.636 msec (DUP!) 89. ... 90.
 [ Team LiB ]
 Page 54
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.10 Unix Standards At the time of this writing, the most interesting Unix standardization activity was being done by The Austin Common Standards Revision Group (CSRG). Their efforts have produced roughly 4,000 pages of specifications covering over 1,700 programming interfaces [Josey 2002]. These specifications carry both the IEEE POSIX designation as well as The Open Group's Technical Standard designation. The net result is that you'll likely encounter references to the same standard by various names: ISO/IEC 9945:2002, IEEE Std 1003.1-2001, and the Single Unix Specification Version 3, for example. In this text, we will refer to this standard as simply The POSIX Specification, except in sections like this one where we are discussing specifics of various older standards.
 The easiest way to acquire a copy of this consolidated standard is to either order it on CD-ROM or access it via the Web (free of charge). The starting point for either of these methods is
@@ -412,7 +412,7 @@ The first POSIX standard was a trial-use version in 1986 known as "IEEE-IX." The
  IEEE Std 1003.2 1992 came next in two volumes (about 1,300 pages). Its title contained "Part 2: Shell and Utilities." This part defined the shell (based on the System V Bourne shell) and about 100 utilities (programs normally executed from a shell, from awk and basename to vi and yacc). Throughout this text, we will refer to this standard as POSIX.2.
  IEEE Std 1003.1b 1993 (590 pages) was originally known as IEEE P1003.4. This was an update to the 1003.1 1990 standard to include the real-time extensions developed by the P1003.4 working group. The 1003.1b 1993 standard added the following items to the 1990 standard: file synchronization, asynchronous I/O, semaphores, memory management (mmap and shared memory), execution scheduling, clocks and timers, and message queues.
 Page 55
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
  IEEE Std 1003.1, 1996 Edition [IEEE 1996] (743 pages) came next and included 1003.1 1990 (the base API), 1003.1b 1993 (real-time extensions), 1003.1c 1995 (pthreads), and 1003.1i 1995 (technical corrections to 1003.1b). This standard was also called ISO/IEC 9945 1: 1996. Three chapters on threads were added, along with additional sections on thread synchronization (mutexes and condition variables), thread scheduling, and synchronization scheduling. Throughout this text, we will refer to this standard as POSIX.1. This standard also contains a Foreword stating that ISO/IEC 9945 consists of the following parts:
 o Part 1: System API (C language)
 o Part 2: Shell and utilities
@@ -430,7 +430,7 @@ Background on The Open Group The Open Group was formed in 1996 by the consolidat
  Issue 4 was published in 1992, followed by Issue 4, Version 2 in 1994. This latest version was also known as "Spec 1170," with the magic number 1,170 being the sum of the number of system interfaces (926), the number of headers (70), and the number of commands (174). The latest name for this set of specifications is the "X/Open Single Unix Specification," although it is also called "Unix 95."
  In March 1997, Version 2 of the Single Unix Specification was announced. Products conforming to this specification were called "Unix 98." We will refer to this specification as just "Unix 98" throughout this text. The number of interfaces required by Unix 98 increases from 1,170 to 1,434, although for a workstation this jumps to 3,030, because it includes the Common Desktop Environment (CDE), which in turn requires the X Window System and the Motif user interface. Details are available in [Josey 1997] and at http://www.UNIX.org/version2. The networking
 Page 56
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 services that are part of Unix 98 are defined for both the sockets and XTI APIs. This specification is nearly identical to POSIX.1g.
 Unfortunately, Unix 98 referred to networking standards as XNS: X/Open Networking Services. The version of this document that defines sockets and XTI for Unix 98 ([Open Group 1997]) is called "XNS Issue 5." In the networking world XNS has always been an abbreviation for the Xerox Network Systems architecture. We will avoid this use of XNS and refer to this X/Open document as just the Unix 98 network API standard.
 Unification of Standards The above brief backgrounds on POSIX and The Open Group both continue with The Austin Group's publication of The Single Unix Specification Version 3, as mentioned at the beginning of this section. Getting over 50 companies to agree on a single standard is certainly a landmark in the history of Unix. Most Unix systems today conform to some version of POSIX.1 and POSIX.2; many comply with The Single Unix Specification Version 3.
@@ -440,7 +440,7 @@ Internet Engineering Task Force (IETF) The Internet Engineering Task Force (IETF
 The Internet standards process is documented in RFC 2026 [Bradner 1996]. Internet standards normally deal with protocol issues and not with programming APIs. Nevertheless, two RFCs (RFC 3493 [Gilligan et al. 2003] and RFC 3542 [Stevens et al. 2003]) specify the sockets API for IPv6. These are informational RFCs, not standards, and were produced to speed the deployment of portable applications by the numerous vendors working on early releases of IPv6. Although standards bodies tend to take a long time, many APIs were standardized in The Single Unix Specification Version 3.
 [ Team LiB ]
 Page 57
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.11 64-Bit Architectures During the mid to late 1990s, the trend began toward 64-bit architectures and 64-bit software. One reason is for larger addressing within a process (i.e., 64-bit pointers), which can address large amounts of memory (more than 232 bytes). The common programming model for existing 32-bit Unix systems is called the ILP32 model, denoting that integers (I), long integers (L), and pointers (P) occupy 32 bits. The model that is becoming most prevalent for 64-bit Unix systems is called the LP64 model, meaning only long integers (L) and pointers (P) require 64 bits. Figure 1.17 compares these two models.
 Figure 1.17. Comparison of number of bits to hold various datatypes for the ILP32 and LP64 models.
@@ -449,7 +449,7 @@ ANSI C invented the size_t datatype, which is used, for example, as the argument
 The solution is to use datatypes designed specifically to handle these scenarios. The sockets API uses the socklen_t datatype for lengths of socket address structures, and XTI uses the t_scalar_t and t_uscalar_t datatypes. The reason for not changing these values from 32 bits to 64 bits is to make it easier to provide binary compatibility on the new 64-bit systems for applications compiled under 32-bit systems.
 [ Team LiB ]
 Page 58
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 1.12 Summary Figure 1.5 shows a complete, albeit simple, TCP client that fetches the current time and date from a specified server, and Figure 1.9 shows a complete version of the server. These two examples introduce many of the terms and concepts that are expanded on throughout the rest of the book.
 Our client was protocol-dependent on IPv4 and we modified it to use IPv6 instead. But this just gave us another protocol-dependent program. In Chapter 11, we will develop some functions to let us write protocol-independent code, which will be important as the Internet starts using IPv6.
@@ -458,7 +458,7 @@ The Single Unix Specification Version 3, known by several other names and called
 Readers interested in the history of Unix networking should consult [Salus 1994] for a description of Unix history, and [Salus 1995] for the history of TCP/IP and the Internet.
 [ Team LiB ]
 Page 59
-ABC Amber CHM Converter Trial version, http://www.processtext.com/abcchm.html
+
 [ Team LiB ]
 Exercises 1.1 Go through the steps at the end of Section 1.9 to discover information
 about your network topology.
