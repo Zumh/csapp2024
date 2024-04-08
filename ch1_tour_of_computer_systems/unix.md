@@ -17,10 +17,10 @@ Page 30
 required to work with IPv6. A better solution is to write protocol-independent clients and servers, and we will discuss this in Chapter 11. This chapter also shows a complete TCP server that works with our client.
 To simplify all our code, we define our own wrapper functions for most of the system functions that we call throughout the text. We can use these wrapper functions most of the time to check for an error, print an appropriate message, and terminate when an error occurs. We also show the test network, hosts, and routers used for most examples in the text, along with their hostnames, IP addresses, and operating systems.
 Most discussions of Unix these days include the term "X," which is the standard that most vendors have adopted. We describe the history of POSIX and how it affects the Application Programming Interfaces (APIs) that we describe in this text, along with the other players in the standards arena.
-[ Team LiB ]
+
 Page 31
 
-[ Team LiB ]
+
 1.2 A Simple Daytime Client Let's consider a specific example to introduce many of the concepts and terms that we will encounter throughout the book. Figure 1.5 is an implementation of a TCP time-of-day client. This client establishes a TCP connection with a server and the server simply sends back the current time and date in a human-readable format.
 Figure 1.5 TCP daytime client.
 intro/daytimetcpcli.c
@@ -88,10 +88,10 @@ where \r is the ASCII carriage return and \n is the ASCII linefeed. With a byte-
 In this example, the end of the record is being denoted by the server closing the connection. This technique is also used by version 1.0 of the Hypertext Transfer Protocol (HTTP). Other techniques are available. For example, the Simple Mail Transfer Protocol (SMTP) marks the end of a record with the two-byte sequence of an ASCII carriage return followed by an ASCII linefeed. Sun Remote Procedure Call (RPC) and the Domain Name System (DNS) place a binary count containing the record length in front of each record that is sent when using TCP. The important concept here is that TCP itself provides no record markers: If an application wants to delineate the ends of records, it must do so itself and there are a few common ways to accomplish this.
 Terminate program 26 exit terminates the program. Unix always closes all open descriptors when a process terminates, so our TCP socket is now closed.
 As we mentioned, the text will go into much more detail on all the points we just described.
-[ Team LiB ]
+
 Page 35
 
-[ Team LiB ]
+
 1.3 Protocol Independence Our program in Figure 1.5 is protocol-dependent on IPv4. We allocate and initialize a sockaddr_in structure, we set the family of this structure to AF_INET, and we specify the first argument to socket as AF_INET.
 To modify the program to work under IPv6, we must change the code. Figure 1.6 shows a version that works under IPv6, with the changes highlighted in bold.
 Figure 1.6 Version of Figure 1.5 for IPv6.
@@ -128,10 +128,10 @@ Another deficiency in our programs is that the user must enter the server's IP a
 Page 36
 
 names and ports. We purposely put off the discussion of these functions and continue using IP addresses and port numbers so we know exactly what goes into the socket address structures that we must fill in and examine. This also avoids complicating our discussion of network programming with the details of yet another set of functions.
-[ Team LiB ]
+
 Page 37
 
-[ Team LiB ]
+
 1.4 Error Handling: Wrapper Functions In any real-world program, it is essential to check every function call for an error return. In Figure 1.5, we check for errors from socket, inet_pton, connect, read, and fputs, and when one occurs, we call our own functions, err_quit and err_sys, to print an error message and terminate the program. We find that most of the time, this is what we want to do. Occasionally, we want to do something other than terminate when one of these functions returns an error, as in Figure 5.12, when we must check for an interrupted system call.
 Since terminating on an error is the common case, we can shorten our programs by defining a wrapper function that performs the actual function call, tests the return value, and terminates on an error. The convention we use is to capitalize the name of the function, as in
 sockfd = Socket(AF_INET, SOCK_STREAM, 0);
@@ -178,10 +178,10 @@ Storing errno in a global variable does not work with multiple threads that shar
 Page 39
 
 Throughout the text, we will use phrases such as "the connect function returns ECONNREFUSED" as shorthand to mean that the function returns an error (typically with a return value of 1), with errno set to the specified constant.
-[ Team LiB ]
+
 Page 40
 
-[ Team LiB ]
+
 1.5 A Simple Daytime Server We can write a simple version of a TCP daytime server, which will work with the client from Section 1.2. We use the wrapper functions that we described in the previous section and show this server in Figure 1.9.
 Figure 1.9 TCP daytime server.
 intro/daytimetcpsrv.c
@@ -236,10 +236,10 @@ As with the client in the previous section, we have only examined this server br
  Our server handles only one client at a time. If multiple client connections arrive at about the same time, the kernel queues them, up to some limit, and returns them to accept one at a time. This daytime server, which requires calling two library functions, time and ctime, is quite fast. But if the server took more time to service each client (say a few seconds or a minute), we would need some way to overlap the service of one client with another client.
  The server that we show in Figure 1.9 is called an iterative server because it iterates through each client, one at a time. There are numerous techniques for writing a concurrent server, one that handles multiple clients at the same time. The simplest technique for a concurrent server is to call the Unix fork function (Section 4.7), creating one child process for each client. Other techniques are to use threads instead of fork (Section 26.4), or to pre-fork a fixed number of children when the server starts (Section 30.6).
  If we start a server like this from a shell command line, we might want the server to run for a long time, since servers often run for as long as the system is up. This requires that we add code to the server to run correctly as a Unix daemon: a process that can run in the background, unattached to a terminal. We will cover this in Section 13.4.
-[ Team LiB ]
+
 Page 43
 
-[ Team LiB ]
+
 1.6 Roadmap to Client/Server Examples in the Text Two client/server examples are used predominantly throughout the text to illustrate the various techniques used in network programming:
  A daytime client/server (which we started in Figures 1.5, 1.6, and 1.9)
  An echo client/server (which will start in Chapter 5)
@@ -250,10 +250,10 @@ Figure 1.12. Different versions of the echo client developed in the text.
 Page 44
 
 Figure 1.13. Different versions of the echo server developed in the text.
-[ Team LiB ]
+
 Page 45
 
-[ Team LiB ]
+
 1.7 OSI Model A common way to describe the layers in a network is to use the International Organization for Standardization (ISO) open systems interconnection (OSI) model for computer communications. This is a seven-layer model, which we show in Figure 1.14, along with the approximate mapping to the Internet protocol suite.
 Figure 1.14. Layers in OSI model and Internet protocol suite.
 We consider the bottom two layers of the OSI model as the device driver and networking hardware that are supplied with the system. Normally, we need not concern ourselves with these layers other than being aware of some properties of the datalink, such as the 1500-byte Ethernet maximum transfer unit (MTU), which we describe in Section 2.11.
@@ -263,10 +263,10 @@ The sockets programming interfaces described in this book are interfaces from th
 Why do sockets provide the interface from the upper three layers of the OSI model into the transport layer? There are two reasons for this design, which we note on the right side of Figure 1.14. First, the upper three layers handle all the details of the application (FTP, Telnet, or HTTP, for example) and know little about the communication details. The lower four layers know little about the application, but handle all the communication details: sending data, waiting for acknowledgments, sequencing data that arrives out of order, calculating and verifying checksums, and so on. The second reason is that the upper three layers often form what is called a user process while the lower four layers are normally provided as part of the operating system (OS) kernel. Unix provides this separation between the user process and the kernel, as do many other contemporary operating systems. Therefore, the interface between layers 4 and 5 is the natural place to build the API.
 Page 46
 
-[ Team LiB ]
+
 Page 47
 
-[ Team LiB ]
+
 1.8 BSD Networking History The sockets API originated with the 4.2BSD system, released in 1983. Figure 1.15 shows the development of the various BSD releases, noting the major TCP/IP developments. A few changes to the sockets API also took place in 1990 with the 4.3BSD Reno release, when the OSI protocols went into the BSD kernel.
 Figure 1.15. History of various BSD releases.
 The path down the figure from 4.2BSD through 4.4BSD shows the releases from the Computer Systems Research Group (CSRG) at Berkeley, which required the recipient to already have a source code license for Unix. But all the networking code, both the kernel support (such as the TCP/IP and Unix domain protocol stacks and the socket interface), along with the applications (such as the Telnet and FTP clients and servers), were developed independently from the AT&T-derived Unix code. Therefore, starting in 1989, Berkeley provided the first of the BSD networking releases, which contained all the networking code and various other pieces of the BSD system that were not constrained by the Unix source code license requirement. These releases were "publicly available" and eventually became available by anonymous FTP to anyone.
@@ -274,10 +274,10 @@ The final releases from Berkeley were 4.4BSD-Lite in 1994 and 4.4BSD-Lite2 in 19
 Page 48
 
 Many Unix systems started with some version of the BSD networking code, including the sockets API, and we refer to these implementations as Berkeley-derived implementations. Many commercial versions of Unix are based on System V Release 4 (SVR4). Some of these versions have Berkeley-derived networking code (e.g., UnixWare 2.x), while the networking code in other SVR4 systems has been independently derived (e.g., Solaris 2.x). We also note that Linux, a popular, freely available implementation of Unix, does not fit into the Berkeley-derived classification: Its networking code and sockets API were developed from scratch.
-[ Team LiB ]
+
 Page 49
 
-[ Team LiB ]
+
 1.9 Test Networks and Hosts Figure 1.16 shows the various networks and hosts used in the examples throughout the text. For each host, we show the OS and the type of hardware (since some of the operating systems run on more than one type of hardware). The name within each box is the hostname that appears in the text.
 The topology shown in Figure 1.16 is interesting for the sake of our examples, but the machines are largely spread out across the Internet and the physical topology becomes less interesting in practice. Instead, virtual private networks (VPNs) or secure shell (SSH) connections provide connectivity between these machines regardless of where they live physically.
 Figure 1.16. Networks and hosts used for most examples in the text.
@@ -398,10 +398,10 @@ of data.
 Page 53
 
 88. 64 bytes from 206.168.112.7: icmp_seq=0 ttl=255 time=3.636 msec (DUP!) 89. ... 90.
-[ Team LiB ]
+
 Page 54
 
-[ Team LiB ]
+
 1.10 Unix Standards At the time of this writing, the most interesting Unix standardization activity was being done by The Austin Common Standards Revision Group (CSRG). Their efforts have produced roughly 4,000 pages of specifications covering over 1,700 programming interfaces [Josey 2002]. These specifications carry both the IEEE POSIX designation as well as The Open Group's Technical Standard designation. The net result is that you'll likely encounter references to the same standard by various names: ISO/IEC 9945:2002, IEEE Std 1003.1-2001, and the Single Unix Specification Version 3, for example. In this text, we will refer to this standard as simply The POSIX Specification, except in sections like this one where we are discussing specifics of various older standards.
 The easiest way to acquire a copy of this consolidated standard is to either order it on CD-ROM or access it via the Web (free of charge). The starting point for either of these methods is
 http://www.UNIX.org/version3
@@ -438,28 +438,28 @@ Historically, most Unix systems show either a Berkeley heritage or a System V he
 The focus of this book is on The Single Unix Specification Version 3, with our main focus on the sockets API. Whenever possible we will use the standard functions.
 Internet Engineering Task Force (IETF) The Internet Engineering Task Force (IETF) is a large, open, international community of network designers, operators, vendors, and researchers concerned with the evolution of the Internet architecture and the smooth operation of the Internet. It is open to any interested individual.
 The Internet standards process is documented in RFC 2026 [Bradner 1996]. Internet standards normally deal with protocol issues and not with programming APIs. Nevertheless, two RFCs (RFC 3493 [Gilligan et al. 2003] and RFC 3542 [Stevens et al. 2003]) specify the sockets API for IPv6. These are informational RFCs, not standards, and were produced to speed the deployment of portable applications by the numerous vendors working on early releases of IPv6. Although standards bodies tend to take a long time, many APIs were standardized in The Single Unix Specification Version 3.
-[ Team LiB ]
+
 Page 57
 
-[ Team LiB ]
+
 1.11 64-Bit Architectures During the mid to late 1990s, the trend began toward 64-bit architectures and 64-bit software. One reason is for larger addressing within a process (i.e., 64-bit pointers), which can address large amounts of memory (more than 232 bytes). The common programming model for existing 32-bit Unix systems is called the ILP32 model, denoting that integers (I), long integers (L), and pointers (P) occupy 32 bits. The model that is becoming most prevalent for 64-bit Unix systems is called the LP64 model, meaning only long integers (L) and pointers (P) require 64 bits. Figure 1.17 compares these two models.
 Figure 1.17. Comparison of number of bits to hold various datatypes for the ILP32 and LP64 models.
 From a programming perspective, the LP64 model means we cannot assume that a pointer can be stored in an integer. We must also consider the effect of the LP64 model on existing APIs.
 ANSI C invented the size_t datatype, which is used, for example, as the argument to malloc (the number of bytes to allocate), and as the third argument to read and write (the number of bytes to read or write). On a 32-bit system, size_t is a 32-bit value, but on a 64-bit system, it must be a 64-bit value, to take advantage of the larger addressing model. This means a 64-bit system will probably contain a typedef of size_t to be an unsigned long. The networking API problem is that some drafts of POSIX.1g specified that function arguments containing the size of a socket address structures have the size_t datatype (e.g., the third argument to bind and connect). Some XTI structures also had members with a datatype of long (e.g., the t_info and t_opthdr structures). If these had been left as is, both would change from 32-bit values to 64-bit values when a Unix system changes from the ILP32 to the LP64 model. In both instances, there is no need for a 64-bit datatype: The length of a socket address structure is a few hundred bytes at most, and the use of long for the XTI structure members was a mistake.
 The solution is to use datatypes designed specifically to handle these scenarios. The sockets API uses the socklen_t datatype for lengths of socket address structures, and XTI uses the t_scalar_t and t_uscalar_t datatypes. The reason for not changing these values from 32 bits to 64 bits is to make it easier to provide binary compatibility on the new 64-bit systems for applications compiled under 32-bit systems.
-[ Team LiB ]
+
 Page 58
 
-[ Team LiB ]
+
 1.12 Summary Figure 1.5 shows a complete, albeit simple, TCP client that fetches the current time and date from a specified server, and Figure 1.9 shows a complete version of the server. These two examples introduce many of the terms and concepts that are expanded on throughout the rest of the book.
 Our client was protocol-dependent on IPv4 and we modified it to use IPv6 instead. But this just gave us another protocol-dependent program. In Chapter 11, we will develop some functions to let us write protocol-independent code, which will be important as the Internet starts using IPv6.
 Throughout the text, we will use the wrapper functions developed in Section 1.4 to reduce the size of our code, yet still check every function call for an error return. Our wrapper functions all begin with a capital letter.
 The Single Unix Specification Version 3, known by several other names and called simply The POSIX Specification by us, is the confluence of two long-running standards efforts, finally drawn together by The Austin Group.
 Readers interested in the history of Unix networking should consult [Salus 1994] for a description of Unix history, and [Salus 1995] for the history of TCP/IP and the Internet.
-[ Team LiB ]
+
 Page 59
 
-[ Team LiB ]
+
 Exercises 1.1 Go through the steps at the end of Section 1.9 to discover information
 about your network topology.
 1.2 Obtain the source code for the examples in this text (see the Preface). Compile and test the TCP daytime client in Figure 1.5. Run the program a few times, specifying a different IP address as the command-line argument each time.
